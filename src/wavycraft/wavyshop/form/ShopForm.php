@@ -27,7 +27,8 @@ final class ShopForm {
     protected array $shopData;
 
     public function __construct() {
-        $this->shopData = new Config(WavyShop::getInstance()->getDataFolder() . "shop.yml");
+        $config = new Config(WavyShop::getInstance()->getDataFolder() . "shop.yml", Config::YAML);
+        $this->shopData = $config->getAll();
     }
 
     public function sendMainShopForm(Player $player) : void{
