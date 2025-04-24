@@ -76,11 +76,11 @@ final class ShopForm {
             ->addInput("Enter quantity to buy:", "1");
 
         $form->setCallback(function(Player $player, $data) use ($itemData) {
-            if ($data === null || !isset($data[1]) || trim($data[1]) === "" || !is_numeric($data[1])) {
+            if ($data === null || !isset($data[0]) || trim($data[0]) === "" || !is_numeric($data[0])) {
                 $player->sendMessage("§cPlease enter a valid number.");
                 return;
             }
-            $amount = (int) $data[1];
+            $amount = (int) $data[0];
             if ($amount <= 0) return;
 
             $this->sendConfirmationForm($player, $itemData, $amount);
