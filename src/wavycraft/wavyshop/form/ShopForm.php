@@ -94,7 +94,7 @@ final class ShopForm {
 
         $form = (new ModalForm())
             ->setTitle("Confirm Purchase")
-            ->setContent("Buy §e{$amount}x {$itemData['name']}§f for §a$$total§f?")
+            ->setContent("Buy §e{$amount}x {$itemData['name']}§f for §a$" . $total . "§f?")
             ->setButton1("Yes")
             ->setButton2("No");
 
