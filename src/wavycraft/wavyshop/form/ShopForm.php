@@ -37,7 +37,7 @@ final class ShopForm {
             ->setContent("Select a category:");
 
         foreach ($this->shopData as $category => $info) {
-            $form->addButton($category, 1, $info["image"]);
+            $form->addButton($category, 0, $info["image"]);
         }
 
         $form->setCallback(function(Player $player, $data) {
@@ -57,7 +57,7 @@ final class ShopForm {
             ->setContent("Select an item to buy:");
 
         foreach ($this->shopData[$category]["items"] as $item) {
-            $form->addButton($item["name"] . "\n§a$" . $item["price"], 1, $item["item_image"]);
+            $form->addButton($item["name"] . "\n§a$" . $item["price"], 0, $item["item_image"]);
         }
 
         $form->setCallback(function(Player $player, $data) use ($category) {
@@ -72,12 +72,12 @@ final class ShopForm {
     public function sendAmountInputForm(Player $player, array $itemData) : void{
         $form = (new CustomForm())
             ->setTitle("Buy " . $itemData["name"])
-            ->addLabel("Price: $" . $itemData["price"] . " each")
-            ->addInput("Enter quantity to buy:", "1");
+            ->addLabel("Price: $" . $itemData["price"] . "§f each")
+            ->addInput("Enter quantity to buy:", "amount");
 
         $form->setCallback(function(Player $player, $data) use ($itemData) {
             if ($data === null || !isset($data[0]) || trim($data[0]) === "" || !is_numeric($data[0])) {
-                $player->sendMessage("§cPlease enter a valid number.");
+                $player->sendMessage("§cPlease enter a valid number!");
                 return;
             }
             $amount = (int) $data[0];
@@ -107,12 +107,12 @@ final class ShopForm {
                     $item = StringToItemParser::getInstance()->parse($itemData["id"]);
                     $item->setCount($amount);
                     $player->getInventory()->addItem($item);
-                    $player->sendMessage("§aPurchased {$amount}x {$itemData['name']} for \${$total}.");
+                    $player->sendMessage("§aPurchased {$amount}x {$itemData['name']} for \${$total}");
                 } else {
                     $player->sendMessage("§cYou do not have enough money!");
                 }
             } else {
-                $player->sendMessage("§ePurchase cancelled.");
+                $player->sendMessage("§ePurchase cancelled!");
             }
         });
 
